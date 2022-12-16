@@ -1,0 +1,70 @@
+name: CI
+
+on:
+  pull_request:
+    branches: ['main']
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ⚙ Setup repo
+        uses: actions/checkout@v3
+
+      - name: ⚙ Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
+          cache: yarn
+
+      - name: 📦 Install dependencies
+        run: yarn install
+
+      - name: 🤖 Check code lint
+        run: yarn lint:check
+
+  format:
+      runs-on: ubuntu-latest
+
+      steps:
+        - name: ⚙ Setup repo
+          uses: actions/checkout@v3
+
+        - name: ⚙ Setup Node
+          uses: actions/setup-node@v2
+          with:
+            node-version: 16.x
+            cache: yarn
+
+        - name: 📦 Install dependencies
+          run: yarn install
+
+        - name: 💇‍♀️ Check code format
+          run: yarn format:check
+
+  doctor:
+      runs-on: ubuntu-latest
+
+      steps:
+        - name: ⚙ Setup repo
+          uses: actions/checkout@v3
+
+        - name: ⚙ Setup Node
+          uses: actions/setup-node@v2
+          with:
+            node-version: 16.x
+            cache: yarn
+
+        - name: 📦 Install dependencies
+          run: yarn install
+
+        - name: 📥 Install expo-cli
+          run: yarn global add expo-cli
+
+        - name: 🤞 Run expo doctor
+          run: expo doctor

@@ -1,0 +1,6 @@
+{
+  "*.{ts,tsx}": [
+    "eslint --ext .tsx --ext .ts",
+    "prettier --check"
+  ]
+}

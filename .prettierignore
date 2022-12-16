@@ -1,0 +1,12 @@
+ios/
+android/
+node_modules/
+.*/
+./assets/*
+yarn.lock
+app.json
+eas.json
+package.json
+tsconfig.json
+.prettierrc.json
+.lintstagedrc.json

@@ -1,0 +1,70 @@
+name: Build APK
+
+on:
+  push:
+    branches: ['main']
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ⚙ Setup repo
+        uses: actions/checkout@v3
+
+      - name: ⚙ Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
+          cache: yarn
+
+      - name: ⚙ Setup Expo
+        uses: expo/expo-github-action@7.2.0
+        with:
+          expo-version: latest
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: 📦 Install dependencies
+        run: yarn install
+
+      - name: 🤞 Build app
+        run: eas build -p android --profile production --platform android
+
+  deploy-release:
+    runs-on: ubuntu-latest
+    needs: build-android
+
+    steps:
+      - name: ⚙ Setup repo
+        uses: actions/checkout@v3
+
+      - name: ⚙ Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
+          cache: yarn
+
+      - name: ⚙ Setup Expo
+        uses: expo/expo-github-action@7.2.0
+        with:
+          expo-version: latest
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+          
+      - name: 📦 Install dependencies
+        run: yarn install
+
+      - name: 📥 Download apk
+        run:
+          curl $(eas build:list --platform=android --limit=1 | grep -Eo "https://.*\.apk$") -L -o /tmp/release.apk
+
+      - name: 🚀 Release Apk
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ github.run_number }}-android
+          files: /tmp/release.apk

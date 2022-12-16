@@ -1,0 +1,112 @@
+{
+  "Create import doc template": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "impdoc",
+    "body": [
+      "// --------------------------------------------------------",
+      "// ${1/(.*)/${1:/upcase}/} IMPORTS",
+      "// --------------------------------------------------------"
+    ],
+    "description": "Returns a import doc template"
+  },
+  "Create import doc for GENERAL": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "impdocg",
+    "body": [
+      "// --------------------------------------------------------",
+      "// GENERAL IMPORTS",
+      "// --------------------------------------------------------"
+    ],
+    "description": "Returns a import doc for general"
+  },
+  "Create import doc for HOOKS": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "impdoch",
+    "body": [
+      "// --------------------------------------------------------",
+      "// HOOKS IMPORTS",
+      "// --------------------------------------------------------"
+    ],
+    "description": "Returns a import doc for hooks"
+  },
+  "Create import doc for MOCKS": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "impdocm",
+    "body": [
+      "// --------------------------------------------------------",
+      "// MOCKS IMPORTS",
+      "// --------------------------------------------------------"
+    ],
+    "description": "Returns a import doc for mocks"
+  },
+  "Create import doc for TYPES": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "impdoct",
+    "body": [
+      "// --------------------------------------------------------",
+      "// TYPES IMPORTS",
+      "// --------------------------------------------------------"
+    ],
+    "description": "Returns a import doc for types"
+  },
+  "Create import doc for COMPONENTS": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "impdocc",
+    "body": [
+      "// --------------------------------------------------------",
+      "// COMPONENTS IMPORTS",
+      "// --------------------------------------------------------"
+    ],
+    "description": "Returns a import doc for components"
+  },
+  "Create import doc for mobx STORE": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "impdocstr",
+    "body": [
+      "// --------------------------------------------------------",
+      "// STORE IMPORTS",
+      "// --------------------------------------------------------"
+    ],
+    "description": "Returns a import doc for mobx store"
+  },
+  "Create import doc for mobx STYLES": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "impdocstl",
+    "body": [
+      "// --------------------------------------------------------",
+      "// STYLES IMPORTS",
+      "// --------------------------------------------------------"
+    ],
+    "description": "Returns a import doc for style"
+  },
+  "Create import doc for mobx SERVICES": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "impdocsvc",
+    "body": [
+      "// --------------------------------------------------------",
+      "// SERVICES IMPORTS",
+      "// --------------------------------------------------------"
+    ],
+    "description": "Returns a import doc for services"
+  },
+  "Create import doc for mobx UTILS": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "impdocu",
+    "body": [
+      "// --------------------------------------------------------",
+      "// UTILS IMPORTS",
+      "// --------------------------------------------------------"
+    ],
+    "description": "Returns a import doc for utils"
+  },
+  "Create import doc for mobx HOOKS": {
+    "scope": "javascript,typescript,javascriptreact,typescriptreact",
+    "prefix": "impdoch",
+    "body": [
+      "// --------------------------------------------------------",
+      "// HOOKS IMPORTS",
+      "// --------------------------------------------------------"
+    ],
+    "description": "Returns a import doc for hooks"
+  }
+}
