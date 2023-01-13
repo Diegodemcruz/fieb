@@ -31,7 +31,7 @@ import { trimString } from '@utils/trimString'
 
 import {
 	Container,
-	FlashListContainer,
+	// FlashListContainer,
 	ListHeaderContainer,
 	ListSeparator,
 	Title,
@@ -86,21 +86,27 @@ const TravelApprovals: React.FC = () => {
 
 			const parsedTravelList = response.data.map((approval) => {
 				const ref = createRef<Swipeable>()
-
 				travelListRefs.current.push(ref)
 
-				return {
-					ref,
-					...approval,
-					dataCriacao: format(parseISO(approval.dataCriacao), 'dd/MM/yyyy'),
-					totalPlanejadoFormatado: formatCurrency({
-						amount: approval.totalPlanejado,
+				
+					const parsed_dtc_geracao = format(parseISO(approval.dataCriacao), 'dd/MM/yyyy');
+					const amount = Number(approval.totalPlanejado);
+					const totalPlanejadoFormatado = formatCurrency({
+						amount: amount.toFixed(2),
 						code: 'BRL',
-					})[0],
+					})[0];
+					return {
+						ref,
+						parsed_dtc_geracao,
+						totalPlanejadoFormatado,
+						...approval,
+					
 				}
 			})
 
 			setTravelList(parsedTravelList)
+
+			
 		} catch (err: unknown) {
 			dispatch(actionsNotTravel.addStatusFalse())
 			const errorMessage = 'Erro ao carregar lista de viagens, tente novamente mais tarde'
@@ -453,7 +459,7 @@ const TravelApprovals: React.FC = () => {
 					</TouchableOpacity>
 				</ListHeaderContainer>
 
-				<FlashListContainer>
+				{/* <FlashListContainer> */}
 					<FlashList
 						renderItem={({ item }) => (
 							<ApprovalListItem
@@ -484,7 +490,7 @@ const TravelApprovals: React.FC = () => {
 						refreshing={loading}
 						onRefresh={handleLoadTravelList}
 					/>
-				</FlashListContainer>
+				{/* </FlashListContainer> */}
 
 				{selectedTravels.length > 0 && (
 					<MultipleApprovalAction

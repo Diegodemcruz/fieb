@@ -32,8 +32,10 @@ export const ListHeaderContainer = styled.View`
 
 export const FlashListContainer = styled.View`
 	flex: 1;
-
-	margin: 0 -16px;
+	margin: 0 ;
+	margin-border: 10px ;
+	
+	background-color: #000;
 `
 
 export const ListSeparator = styled.View`

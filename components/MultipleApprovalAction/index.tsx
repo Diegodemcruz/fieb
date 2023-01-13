@@ -35,17 +35,19 @@ const MultipleApprovalAction: React.FC<MultipleApprovalActionProps> = ({
 		<MultiSelectPaymentsContainer>
 			{!hasConfirm && (
 				<MultiSelectPaymentsContent onPress={() => setHasConfirm(true)}>
-					<Label uppercase color='#2977BE' fontSize={24} fontWeight={500}>
+					<Label uppercase color='#2977BE' fontSize={20} fontWeight={500} marginTop={80}>
 						Continuar{'   '}
-					</Label>
-					<Icon
+						<Icon 
 						icon={{
 							family: 'AntDesign',
 							name: 'arrowright',
+						
 						}}
 						color='#2977BE'
-						size={24}
+						size={24}											
 					/>
+					</Label>
+					
 				</MultiSelectPaymentsContent>
 			)}
 

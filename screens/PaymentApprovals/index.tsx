@@ -36,7 +36,7 @@ import { trimString } from '@utils/trimString'
 
 import {
 	Container,
-	FlashListContainer,
+	// FlashListContainer,
 	ListHeaderContainer,
 	ListSeparator,
 	Title,
@@ -95,23 +95,51 @@ const PaymentApprovals: React.FC = () => {
 
 			paymentListRefs.current = []
 
+			// const parsedPaymentList = response.data.map((payment) => {
+			// 	const ref = createRef<Swipeable>()
+			// 	paymentListRefs.current.push(ref)
+				
+			// 	return {
+					
+			// 		ref,
+			// 		...payment,
+					
+			// 		parsed_dtc_geracao: format(parseISO(payment.dtc_geracao), 'dd/MM/yyyy'),
+			// 		formatted_val_arquivo_total: formatCurrency({
+						
+			// 			amount: Number(payment.val_arquivo_total.toFixed(5)),
+			// 			code: 'BRL',
+			// 		})[0],
+			// 	}
+			// })
+
+			// setPaymentList(parsedPaymentList)
+
 			const parsedPaymentList = response.data.map((payment) => {
 				const ref = createRef<Swipeable>()
-
 				paymentListRefs.current.push(ref)
-
+			
+				const parsed_dtc_geracao = format(parseISO(payment.dtc_geracao), 'dd/MM/yyyy');
+				const amount = Number(payment.val_arquivo_total);
+				const formatted_val_arquivo_total = formatCurrency({
+					amount: amount.toFixed(2),
+					code: 'BRL',
+				})[0];
+			
 				return {
 					ref,
+					parsed_dtc_geracao,
+					formatted_val_arquivo_total,
 					...payment,
-					parsed_dtc_geracao: format(parseISO(payment.dtc_geracao), 'dd/MM/yyyy'),
-					formatted_val_arquivo_total: formatCurrency({
-						amount: payment.val_arquivo_total,
-						code: 'BRL',
-					})[0],
 				}
-			})
+			});
+			setPaymentList(parsedPaymentList);
 
-			setPaymentList(parsedPaymentList)
+
+			
+
+
+
 		} catch (err) {
 			dispatch(actionsNotPayment.addStatusFalse())
 			const errorMessage = 'Erro ao carregar lista de pagamentos, tente novamente mais tarde'
@@ -156,11 +184,11 @@ const PaymentApprovals: React.FC = () => {
 				if (filterByText) {
 					const filterByLabelResult = payment.ENTI_NOME.toLowerCase().includes(filterByText)
 
-					const filterByValueResult = payment.formatted_val_arquivo_total.includes(filterByText)
+					//const filterByValueResult = payment.formatted_val_arquivo_total.includes(filterByText)
 
 					const filterByDateResult = payment.parsed_dtc_geracao.includes(filterByText)
 
-					return filterByLabelResult || filterByValueResult || filterByDateResult
+					return filterByLabelResult || filterByDateResult //|| filterByValueResult 
 				}
 
 				return true
@@ -237,7 +265,7 @@ const PaymentApprovals: React.FC = () => {
 					},
 					opacity: 1,
 				})
-
+				console.log(result.data)
 				setSelectedPayment({
 					...payment,
 					history: {
@@ -388,12 +416,12 @@ const PaymentApprovals: React.FC = () => {
 				await api
 					.post(`Spef/${action === 'approve' ? 'aprovar_titulo' : 'reprovar_titulo'}`, {
 						nr: selectedPayments.length,
-						lista,
-						// lista: selectedPayments.map((payment) => ({
-						// 	cod_cnab: String(payment.cod_cnab),
-						// 	funC_ID: Number(loggedUserId),
-						// 	funC_NOME: loggedUserName,
-						// })),
+						//lista,
+						lista: selectedPayments.map((payment) => ({
+							cod_cnab: String(payment.cod_cnab),
+							funC_ID: Number(loggedUserId),
+							funC_NOME: loggedUserName,
+						})),
 					})
 					.finally(() => Toast.hide(toast))
 
@@ -552,7 +580,7 @@ const PaymentApprovals: React.FC = () => {
 					</TouchableOpacity>
 				</ListHeaderContainer>
 
-				<FlashListContainer>
+				{/* <FlashListContainer> */}
 					<FlashList
 						renderItem={({ item }) => (
 							<ApprovalListItem
@@ -580,7 +608,7 @@ const PaymentApprovals: React.FC = () => {
 						refreshing={loading}
 						onRefresh={handleLoadPaymentList}
 					/>
-				</FlashListContainer>
+				{/* </FlashListContainer> */}
 
 				{selectedPayments.length > 0 && (
 					<MultipleApprovalAction
@@ -594,8 +622,14 @@ const PaymentApprovals: React.FC = () => {
 				)}
 
 				{selectedPayment && (
+					
+
 					<ApprovalDetail<PaymentPropsWithRef>
+
+					
 						approvalInfoFieldsAndValues={selectedPayment.history.ListaCnab.map((history) => ({
+							
+
 							Valor: history.Valor,
 							Favorecido: history.Favorecido,
 							'Data de Pagamento': history.DataPagamento,
@@ -609,10 +643,11 @@ const PaymentApprovals: React.FC = () => {
 							string: selectedPayment.ENTI_NOME,
 							maxLength: 20,
 						})}
+						
 						approvalData={selectedPayment}
 						approvalLeftDownLabel={selectedPayment.parsed_dtc_geracao}
 						approvalRightDownLabel='Ocultar detalhes'
-						approvalRightUpLabel={selectedPayment.formatted_val_arquivo_total}
+						approvalRightUpLabel={selectedPayment.formatted_val_arquivo_total }
 						approvalSvgIcon={getBankImage(selectedPayment.num_banco_rem)}
 						handleApprovalRightDownLabelCallback={() => handleCloseDetail()}
 						handleCloseRequest={() => handleCloseDetail()}
